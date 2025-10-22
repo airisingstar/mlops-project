@@ -205,25 +205,43 @@ data/monitoring/	.csv, .json	Easy for metrics dashboard
 
 __________________________________________________________________________________________
 
-Example: Converting CSV → Parquet with data_prep.py (pandas)
+---
+
+## 📘 Example: Converting CSV → Parquet with `data_prep.py` (pandas)
+
+```python
 import pandas as pd
+
 # Load raw CSV
 df = pd.read_csv("data/raw/customers.csv")
+
 # Clean and filter
 df = df.dropna(subset=["email", "age"])
+
 # Save as Parquet
 df.to_parquet("data/interim/cleaned_customers.parquet", index=False)
 
-.parquet file is a binary, columnar data format designed for big data and ML pipelines.
+🧠 About .parquet Files
+
+A .parquet file is a binary, columnar data format designed for big data and ML pipelines.
+
 It’s used instead of .csv because it’s:
-Much faster to read/write
-Compressed (saves cloud storage)
-Column-oriented (great for analytics and training data)
-Schema-aware (preserves data types)
+
+⚡ Much faster to read/write
+
+🗜️ Compressed (saves cloud storage)
+
+📊 Column-oriented (great for analytics and training data)
+
+🧩 Schema-aware (preserves data types)
+
 Parquet stores each column separately (columnar layout).
-This allows efficient reads for selected columns only: 
+This allows efficient reads for selected columns only:
+
 pd.read_parquet("cleaned_customers.parquet", columns=["age", "region"])
-t’s the standard format used by tools like Spark, Arrow, Athena, BigQuery, SageMaker, and Azure ML.
+
+
+It’s the standard format used by tools like Spark, Arrow, Athena, BigQuery, SageMaker, and Azure ML.
 
 Author: David Santana Rivera
 Last updated: 10/10/2025
