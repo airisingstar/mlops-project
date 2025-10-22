@@ -1,0 +1,47 @@
+# =========================================
+#   MLOps Project .gitignore
+#   Keeps only example data in repo
+# =========================================
+
+# --- Ignore everything under /data ---
+data/*
+
+# --- But keep subfolders so repo structure remains ---
+!data/
+!data/**/
+!data/**/_example.*
+
+# --- Ignore non-example datasets ---
+data/**/*.csv
+data/**/*.json
+data/**/*.parquet
+data/**/*.txt
+
+# --- Re-allow only example datasets again (safe) ---
+!data/**/*_example.csv
+!data/**/*_example.json
+!data/**/*_example.parquet
+!data/**/*_example.txt
+
+# --- Ignore model artifacts ---
+models/
+model_registry/
+
+# --- Ignore Python caches and logs ---
+__pycache__/
+*.pyc
+*.log
+*.pkl
+
+# --- Ignore notebooks and checkpoints ---
+*.ipynb_checkpoints/
+*.ipynb
+
+# --- Ignore virtual environments ---
+venv/
+.env
+.env.*
+
+# --- Ignore OS files ---
+.DS_Store
+Thumbs.db

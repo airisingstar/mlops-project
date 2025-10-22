@@ -1,0 +1,11 @@
+customer_id,avg_purchase_value,total_transactions,loyalty_tier,last_purchase_days,region_East,region_North,region_South,region_West
+1,245.6,8,Gold,9,1,0,0,0
+2,185.3,6,Silver,21,0,0,0,1
+3,99.8,4,Bronze,57,1,0,0,0
+4,310.4,10,Platinum,2,0,0,1,0
+5,150.0,5,Silver,30,0,1,0,0
+6,75.9,3,Bronze,73,0,0,0,1
+7,350.2,9,Platinum,1,1,0,0,0
+8,285.4,7,Gold,4,0,0,1,0
+9,99.9,4,Bronze,45,0,0,0,1
+10,520.0,11,Platinum,10,1,0,0,0

@@ -1,0 +1,93 @@
+[
+    {
+      "transaction_id": "T001",
+      "customer_id": 1,
+      "amount": 250.50,
+      "currency": "USD",
+      "timestamp": "2025-10-18T14:32:00Z",
+      "payment_method": "Credit Card",
+      "status": "Completed"
+    },
+    {
+      "transaction_id": "T002",
+      "customer_id": 2,
+      "amount": 180.00,
+      "currency": "USD",
+      "timestamp": "2025-10-19T09:15:00Z",
+      "payment_method": "PayPal",
+      "status": "Completed"
+    },
+    {
+      "transaction_id": "T003",
+      "customer_id": 3,
+      "amount": 95.75,
+      "currency": "USD",
+      "timestamp": "2025-10-19T10:41:00Z",
+      "payment_method": "Debit Card",
+      "status": "Pending"
+    },
+    {
+      "transaction_id": "T004",
+      "customer_id": 4,
+      "amount": 420.00,
+      "currency": "USD",
+      "timestamp": "2025-10-20T12:10:00Z",
+      "payment_method": "Credit Card",
+      "status": "Completed"
+    },
+    {
+      "transaction_id": "T005",
+      "customer_id": 5,
+      "amount": 150.00,
+      "currency": "USD",
+      "timestamp": "2025-10-20T15:55:00Z",
+      "payment_method": "Cash",
+      "status": "Completed"
+    },
+    {
+      "transaction_id": "T006",
+      "customer_id": 6,
+      "amount": 75.90,
+      "currency": "USD",
+      "timestamp": "2025-10-21T09:00:00Z",
+      "payment_method": "Debit Card",
+      "status": "Failed"
+    },
+    {
+      "transaction_id": "T007",
+      "customer_id": 7,
+      "amount": 350.25,
+      "currency": "USD",
+      "timestamp": "2025-10-21T11:20:00Z",
+      "payment_method": "Credit Card",
+      "status": "Completed"
+    },
+    {
+      "transaction_id": "T008",
+      "customer_id": 8,
+      "amount": 285.40,
+      "currency": "USD",
+      "timestamp": "2025-10-21T13:47:00Z",
+      "payment_method": "PayPal",
+      "status": "Completed"
+    },
+    {
+      "transaction_id": "T009",
+      "customer_id": 9,
+      "amount": 99.99,
+      "currency": "USD",
+      "timestamp": "2025-10-21T15:12:00Z",
+      "payment_method": "Debit Card",
+      "status": "Pending"
+    },
+    {
+      "transaction_id": "T010",
+      "customer_id": 10,
+      "amount": 520.00,
+      "currency": "USD",
+      "timestamp": "2025-10-21T18:33:00Z",
+      "payment_method": "Credit Card",
+      "status": "Completed"
+    }
+  ]
+  

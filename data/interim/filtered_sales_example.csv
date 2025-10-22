@@ -1,0 +1,11 @@
+transaction_id,customer_id,amount_usd,transaction_year,region
+T001,1,250.5,2025,East
+T002,2,180.0,2025,
+T003,3,95.75,2025,
+T004,4,420.0,2025,South
+T005,5,150.0,2025,North
+T006,6,75.9,2025,
+T007,7,350.25,2025,East
+T008,8,285.4,2025,South
+T009,9,99.99,2025,West
+T010,10,520.0,2025,

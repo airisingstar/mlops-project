@@ -1,0 +1,36 @@
+# ============================
+#  MLOPS PROJECT DEPENDENCIES
+# ============================
+
+# --- Core Data & ML ---
+pandas==2.2.2
+scikit-learn==1.5.2
+numpy==1.26.4
+joblib==1.4.2
+
+# --- Model Serving ---
+fastapi==0.115.2
+uvicorn==0.30.1
+
+# --- Optional: Tracking & Logging ---
+mlflow==2.14.1
+
+# --- Cloud & Serialization (future-ready) ---
+boto3==1.35.5           # AWS SDK for S3, SageMaker integrations
+pyyaml==6.0.2
+requests==2.32.3
+
+# --- Testing & Validation ---
+pytest==8.2.1
+great-expectations==1.0.3
+
+# --- Utilities ---
+python-dotenv==1.0.1
+
+
+#✅ pandas, scikit-learn, joblib — your core ETL + ML training dependencies
+#✅ fastapi, uvicorn — serve models via API
+#✅ mlflow — optional for tracking & registry (you can comment this out if not used yet)
+#✅ boto3 — enables future S3 storage or SageMaker pipeline integration
+#✅ pytest, great-expectations — lightweight validation & regression testing support
+#✅ python-dotenv — read environment variables for cloud deployments

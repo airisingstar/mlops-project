@@ -177,7 +177,7 @@ if drift_score > 0.05:
 
 ### 🔸 Example files created
 ```
-data/monitoring/input_stats_2025_10_21.json
+data/monitoring/input_stats.json
 data/monitoring/drift_summary.csv
 ```
 

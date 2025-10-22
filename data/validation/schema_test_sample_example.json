@@ -1,0 +1,22 @@
+{
+    "columns": [
+      "customer_id",
+      "name",
+      "email",
+      "age",
+      "region",
+      "signup_date",
+      "last_purchase",
+      "loyalty_points"
+    ],
+    "types": {
+      "customer_id": "int64",
+      "name": "object",
+      "email": "object",
+      "age": "float64",
+      "region": "object",
+      "signup_date": "object",
+      "last_purchase": "object",
+      "loyalty_points": "int64"
+    }
+}

@@ -1,0 +1,5 @@
+customer_id,name,email,age,region,signup_date,last_purchase,loyalty_points
+5,Emma Davis,emma.davis@example.com,28.0,North,2023-02-17,2025-09-15,670
+7,Grace Liu,grace.liu@example.com,27.0,East,2022-06-20,2025-10-18,1330
+8,Henry Carter,henry.carter@example.com,38.0,South,2021-01-30,,980
+9,Ivy Martinez,ivy.martinez@example.com,30.0,West,2023-01-10,2025-07-14,720

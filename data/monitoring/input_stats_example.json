@@ -1,0 +1,7 @@
+{
+    "timestamp": "2025-10-21T00:00:00Z",
+    "drift_score": 0.02,
+    "records_analyzed": 2,
+    "monitored_columns": ["age", "region", "loyalty_points"]
+}
+  
