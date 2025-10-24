@@ -6,6 +6,40 @@ End-to-end example of a **production-grade MLOps pipeline** — from raw data in
 
 ---
 
+## 🎯 Model Goal
+
+The objective of this project is to **predict which customer groups are most likely to make a large future purchase** based on their demographics, transaction behavior, and loyalty attributes.
+
+This model uses two primary data sources:
+
+| Source File | Description |
+|--------------|-------------|
+| `customers.csv` | Contains static information about each customer such as age, region, signup date, and loyalty points. |
+| `transactions.json` | Contains dynamic purchase data including transaction amount, timestamp, and payment method. |
+
+---
+
+### 🧠 What the Model Learns
+After merging customers with their transactions using `customer_id`, the model:
+1. **Aggregates purchase behavior** — average spend, total completed transactions, most recent purchase amount.  
+2. **Combines demographic and loyalty features** — age, region, signup date, and loyalty points.  
+3. **Predicts** whether a customer is a **high-value buyer**, defined as someone likely to make a purchase above a given threshold (e.g., `$300`).  
+
+---
+
+### ⚙️ Model Workflow
+1. Detect new data in `data/raw/` (e.g., S3 upload or local ingestion).  
+2. Clean and join datasets → produce `data/processed/train.csv`.  
+3. Train a **RandomForestClassifier** to predict high-value buyers.  
+4. Register and deploy the model via FastAPI for real-time inference.  
+   - **Input Example:** `{ "age": 35, "region": "East", "loyalty_points": 1200 }`  
+   - **Output Example:** `{ "large_purchase_probability": 0.87 }`  
+5. Monitor model drift and retrain automatically as customer patterns evolve.
+
+---
+
+The end-to-end goal is to create a **self-updating, data-driven system** that helps identify which customers are most likely to make large purchases — enabling smarter marketing, retention, and sales strategies.
+
 ## 🚀 Overview
 
 This project demonstrates a full MLOps workflow implemented in **Python**.  
