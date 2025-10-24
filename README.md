@@ -6,9 +6,49 @@ End-to-end example of a **production-grade MLOps pipeline** — from raw data in
 
 ---
 
-## 🎯 Model Goal
+## 🎯 Scenario
 
-The objective of this sample project is to **predict which customer groups are most likely to make a large future purchase** based on their demographics, transaction behavior, and loyalty attributes.
+**MyAiToolset LLC** provides managed **AI automation and chatbot software** solutions designed for small to mid-sized businesses.  
+The company targets a diverse range of industries including **Medical, Dental, Legal, Home Services, Real Estate, Fitness, Education, Ecommerce, Automotive,** and **Restaurant** sectors.
+
+Currently, MyAiToolset offers **four subscription packages**, each tailored to the level of automation, update frequency, and support required by the client:
+
+| Package | Monthly Price | Description |
+|----------|----------------|--------------|
+| 💼 **Business** | $150 | Standard plan for small businesses that need reliable chatbot automation with monthly updates and maintenance. |
+| ⚙️ **Elite** | $250 | Includes faster content updates, priority support, and weekly optimization refreshes. |
+| 🚀 **MVP** | $350 | Designed for high-traffic or seasonal businesses needing frequent updates and 2–4 hour response time. |
+| ⚡ **Now** | $500 | Premium tier with real-time monitoring, live deployment updates, and near-instant support. |
+
+Each package also requires a **one-time setup fee of $399**, which covers onboarding, chatbot customization, and initial content training.
+
+---
+
+## 🚀 Overview
+
+This project operationalizes **lead prediction** and **sales intelligence** for MyAiToolset by connecting:
+
+- 📨 **Formspree** → Website form submissions (leads)  
+- 💳 **Stripe** → Payment and plan purchase data  
+- 🧹 **ETL + Feature Engineering** → Transform lead + payment data into model-ready datasets  
+- 🤖 **Model Training + Registry** → Predict plan tier likelihood  
+- 🌐 **FastAPI Deployment** → Serve real-time predictions for new leads  
+- 📈 **Monitoring** → Track accuracy and drift as new customers arrive  
+
+The entire system forms a **data-driven sales forecasting loop** that continuously improves as the business grows.
+
+---
+
+## 🎯 Model Goal / Objective
+
+Using form submissions collected through **Formspree** (customers.csv) and **Stripe** (transactions.json), the goal is to:
+- **Predict which plan tier** a new lead is most likely to purchase, based on their **Business Type** and **Business Size**.  
+- Enable **lead scoring and targeted offers** by analyzing historical customer purchase patterns.  
+- Automatically update the model as new sign-ups and transactions flow in through the production system via automated ETL.
+
+---
+
+### 🧩 Data Sources
 
 This model uses two primary data sources:
 
@@ -20,83 +60,80 @@ This model uses two primary data sources:
 ---
 
 ### 🧠 What the Model Learns
-After merging customers with their transactions using `customer_id`, the model:
-1. **Aggregates purchase behavior** — average spend, total completed transactions, most recent purchase amount.  
-2. **Combines demographic and loyalty features** — age, region, signup date, and loyalty points.  
-3. **Predicts** whether a customer is a **high-value buyer**, defined as someone likely to make a purchase above a given threshold (e.g., `$300`).  
+The model classifies each new lead into one of four **MyAiToolset packages**:
+
+| Label | Package | Monthly Price |
+|--------|----------|----------------|
+| 0 | Business | $150 |
+| 1 | Elite | $250 |
+| 2 | MVP | $350 |
+| 3 | Now | $500 |
+
+After combining website form submissions with payment records:
+1. Encodes categorical features (business_type, business_size).
+2. Learns correlations between customer demographics and purchased plan tier.
+3. Predicts the most likely package for future leads.
+
+Example:
+
+{
+  "business_type": "Dental",
+  "business_size": "10-25"
+}
+→ Predicted: "MVP ($350/mo)"
 
 ---
 
 ### ⚙️ Model Workflow
-1. Detect new data in `data/raw/` (e.g., S3 upload or local ingestion).  
-2. Clean and join datasets → produce `data/processed/train.csv`.  
-3. Train a **RandomForestClassifier** to predict high-value buyers.  
-4. Register and deploy the model via FastAPI for real-time inference.  
-   - **Input Example:** `{ "age": 35, "region": "East", "loyalty_points": 1200 }`  
-   - **Output Example:** `{ "large_purchase_probability": 0.87 }`  
-5. Monitor model drift and retrain automatically as customer patterns evolve.
+
+1. **Detect new data** in `data/raw/` — new leads arrive via **Formspree** (`customers.csv`) and payment data via **Stripe** (`transactions.json`).  
+2. **Clean and join datasets** — ETL pipeline merges both sources to produce a unified `data/processed/train.csv` dataset.  
+3. **Train a RandomForestClassifier** to predict which **plan tier** (Business, Elite, MVP, Now) a new lead is most likely to purchase.  
+4. **Register and deploy the model** via FastAPI for real-time inference.  
+   - **Input Example:** `{ "business_type": "Dental", "business_size": "10-25" }`  
+   - **Output Example:** `{ "predicted_package": "MVP", "probability": 0.82 }`  
+5. **Monitor model drift** and automatically retrain when the distribution of business types, sizes, or package selections shifts over time.
 
 ---
 
 The end-to-end goal is to create a **self-updating, data-driven system** that helps identify which customers are most likely to make large purchases — enabling smarter marketing, retention, and sales strategies.
 
-## 🚀 Overview
-
-This project demonstrates a full MLOps workflow implemented in **Python**.  
-It includes automated **data cleaning**, **training**, **model promotion**, **deployment**, and **monitoring** stages.
-
-| Stage | Folder | Owner Script | Description |
-|--------|---------|--------------|--------------|
-| 🧩 Raw Data | `data/raw` | — | Manual or ETL uploads raw data |
-| 🧹 Data Prep | `data/interim`, `data/processed` | `src/data_prep.py` | Cleans + joins data for training |
-| 🧮 Feature Engineering | `data/features` | `src/feature_engineering.py` | Creates derived fields for ML |
-| 🤖 Model Training | `models/` | `src/train.py` | Builds and evaluates model |
-| 📦 Model Registry | `model_registry/` | `src/register_model.py` | Stores promoted models |
-| 🌐 Inference | — | `src/serve_app.py` | Exposes REST API for predictions |
-| 📊 Monitoring | `data/monitoring/` | `src/drift_check.py` | Detects drift and triggers retraining |
-
----
-
 ## 🧠 How the Pipeline Works
-
-This pipeline follows an **event-driven orchestration model**, where each stage is triggered automatically when the previous one completes successfully or when new data arrives.  
-The goal is a **self-updating lifecycle** that moves from data ingestion to live monitoring with minimal manual effort.
+This pipeline follows an **event-driven orchestration model**, where each stage runs automatically when new data arrives or the previous job completes successfully.
 
 ---
 
 ### ⚡ Event Flow Overview
 
-1️⃣ **Data Ingestion (Trigger Source)**  
-- New raw data lands in **S3** (or `data/raw/` locally).  
-- An **S3 event notification** or filesystem watcher detects the upload.  
-- This event **triggers the Data Preparation job** to start cleaning and validation.
+1️⃣ **Data Ingestion**  
+- Formspree emails parsed into `data/raw/customers.csv`.  
+- Stripe payment exports synced to `data/raw/transactions.json`.  
+- ETL pipeline triggered via scheduled job or webhook.
 
-2️⃣ **Data Preparation → Processed Output**  
-- `src/data_prep.py` cleans, merges, and validates schema.  
-- Once complete, it emits a `_SUCCESS` marker or orchestration event (e.g., Step Functions, Airflow, or Prefect).  
-- That event **triggers the Feature Engineering job**.
+2️⃣ **Data Preparation**  
+- `src/data_prep.py` cleans and merges lead and transaction data.  
+- Produces unified `train.csv` with encoded `business_type` and `business_size`.
 
-3️⃣ **Feature Engineering Trigger**  
-- `src/feature_engineering.py` generates new derived metrics and aggregates.  
-- When output is written (`data/features/*.parquet`), the orchestrator **launches the Model Training stage**.
+3️⃣ **Feature Engineering**  
+- `src/feature_engineering.py` converts categorical values to numerical features.  
+- Adds label column `package_tier`.
 
 4️⃣ **Model Training & Validation**  
-- `src/train.py` trains and evaluates ML models.  
-- Performance metrics are logged and compared with prior runs.  
-- Upon success, the job emits a **promotion-ready event**.
+- `src/train.py` trains a **RandomForestClassifier** to predict `package_tier`.  
+- Logs accuracy and model version.
 
 5️⃣ **Model Registry & Promotion**  
-- `src/register_model.py` promotes the new model to production if metrics improve.  
-- Promotion automatically **triggers deployment**.
+- `src/register_model.py` stores the trained model if performance exceeds prior baseline.  
+- Triggers deployment.
 
 6️⃣ **Model Deployment & Serving**  
-- `src/deploy_model.py` rebuilds and redeploys the FastAPI microservice.  
-- The `/predict` endpoint begins serving the new model version immediately.
+- `src/deploy_model.py` rebuilds the FastAPI container exposing `/predict`.  
+- Input: `{ "business_type": "Dental", "business_size": "10-25" }`  
+- Output: `{ "predicted_package": "MVP", "probability": 0.82 }`
 
-7️⃣ **Monitoring & Auto-Retrain Loop**  
-- `src/monitor_drift.py` runs on a schedule (cron, Airflow DAG, or Lambda).  
-- It monitors **data drift** and **concept drift**.  
-- If drift > threshold, it **re-triggers the data prep and training pipeline**, closing the automation loop.
+7️⃣ **Monitoring & Retraining Loop**  
+- `src/monitor_drift.py` detects changes in business distribution or conversion patterns.  
+- Retrains model automatically when drift exceeds threshold.
 
 ---
 
@@ -104,69 +141,76 @@ The goal is a **self-updating lifecycle** that moves from data ingestion to live
 
 ```text
           ┌───────────────────────────┐
-          │     🗂️  S3 / Raw Data     │
-          │   (new upload detected)   │
+          │  📨 Formspree Leads       │
+          │  (customers.csv)          │
+          └──────────────┬────────────┘
+                         │
+                         ▼
+          ┌───────────────────────────┐
+          │ 💳 Stripe Transactions     │
+          │ (transactions.json)        │
           └──────────────┬────────────┘
                          │
                          ▼
           ┌───────────────────────────┐
           │ ⚙️  Data Preparation Job  │
-          │ Cleans, merges, validates │
+          │ Merge & Clean Datasets    │
           └──────────────┬────────────┘
                          │
                          ▼
           ┌───────────────────────────┐
           │ 🧮 Feature Engineering     │
-          │ Derived metrics, encoding │
+          │ Encode Type & Size        │
           └──────────────┬────────────┘
                          │
                          ▼
           ┌───────────────────────────┐
           │ 🤖 Model Training          │
-          │ Train, evaluate, validate │
+          │ Predict Plan Tier          │
           └──────────────┬────────────┘
                          │
                          ▼
           ┌───────────────────────────┐
           │ 🏷️  Model Registry         │
-          │ Versioning & promotion    │
+          │ Version & Promotion       │
           └──────────────┬────────────┘
                          │
                          ▼
           ┌───────────────────────────┐
           │ 🚀 Deployment (FastAPI)   │
-          │ Exposes /predict endpoint │
+          │ Exposes /predict Endpoint │
           └──────────────┬────────────┘
                          │
                          ▼
           ┌───────────────────────────┐
           │ 📈 Monitoring & Drift      │
-          │ Auto-retrain trigger loop │
+          │ Auto-Retrain Trigger Loop │
           └───────────────────────────┘
 ```
 
 ### 🧭 Automation
 Local / Sandbox Mode: Sequential execution via make run-all or bash pipeline.sh.
 
-Cloud Mode: Orchestration handled by AWS Step Functions, Airflow, or Prefect.
+Cloud Mode: Orchestrated by Prefect, Airflow, or AWS Step Functions.
 
-Event Communication: S3/Lambda → SNS → Step Functions → ECS/Fargate → Model Registry → FastAPI Deployment.
+Triggers:
+- Formspree → new lead CSV
+- Stripe → new transaction JSON
+- Scheduler → nightly retrain job
 
-Self-Healing Cycle: The monitoring agent detects drift and retriggers training automatically.
+Self-Healing Loop: Model retrains when drift or prediction confidence drops below threshold.
 
 ### 🧩 Tech Stack
-
-| Layer | Tools |
-|--------|--------|
-| **Language** | Python 3.10+ |
-| **Libraries** | pandas, scikit-learn, joblib, FastAPI, uvicorn |
-| **Storage** | Local `/data/` (simulates S3 / Blob) |
-| **Version Control** | Git + GitHub |
-| **Model Registry** | MLflow |
-| **CI/CD Integration** | Azure DevOps or GitHub Actions ready |
-
-
-### ⚙️ Running the Pipeline
+| Layer                   | Tools                                          |
+| ----------------------- | ---------------------------------------------- |
+| 💻 **Language**         | Python 3.10+                                   |
+| 📚 **Libraries**        | pandas, scikit-learn, joblib, FastAPI, uvicorn |
+| 💾 **Storage**          | Local `/data/` (simulated Formspree + Stripe)  |
+| 🔄 **Orchestration**    | Prefect / Airflow / AWS Step Functions         |
+| 🧾 **Model Registry**   | MLflow                                         |
+| 💳 **Integration APIs** | Formspree, Stripe                              |
+| 🚀 **Deployment**       | FastAPI on Render                              |
+| 📈 **Monitoring**       | Drift metrics, accuracy tracking               |
 
 ### ⚙️ Running the Pipeline
 
@@ -180,7 +224,12 @@ pip install -r requirements.txt
 python src/data_prep.py
 ```
 
-3️⃣ Train the model
+3️⃣ Generate Features
+```bash
+python src/feature_engineering.py
+```
+
+4️⃣ Train the model
 ```bash
 python src/train.py
 ```
@@ -190,12 +239,12 @@ python src/train.py
 python src/register_model.py
 ```
 
-5️⃣ Serve the model (API)
+5️⃣ Register and Deploy model
 ```bash
-uvicorn src.serve_app:app --host 0.0.0.0 --port 8080
+python src/register_model.py && python src/deploy_model.py
 ```
 
-6️⃣ Monitor drift
+6️⃣ Monitor drift and Retrain model
 ```bash
 python src/drift_check.py
 ```
@@ -203,4 +252,4 @@ python src/drift_check.py
 ### ✅ Author & Versioning
 Author: David Santana Rivera
 
-Updated: 10-10-2025
+Updated: 10-24-2025
