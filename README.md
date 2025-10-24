@@ -6,7 +6,7 @@ End-to-end example of a **production-grade MLOps pipeline** — from raw data in
 
 ---
 
-## 🎯 Scenario
+## 💼 Scenario
 
 **MyAiToolset LLC** provides managed **AI automation and chatbot software** solutions designed for small to mid-sized businesses.  
 The company targets a diverse range of industries including **Medical, Dental, Legal, Home Services, Real Estate, Fitness, Education, Ecommerce, Automotive,** and **Restaurant** sectors.
@@ -15,10 +15,10 @@ Currently, MyAiToolset offers **four subscription packages**, each tailored to t
 
 | Package | Monthly Price | Description |
 |----------|----------------|--------------|
-| 💼 **Business** | $150 | Standard plan for small businesses that need reliable chatbot automation with monthly updates and maintenance. |
-| ⚙️ **Elite** | $250 | Includes faster content updates, priority support, and weekly optimization refreshes. |
-| 🚀 **MVP** | $350 | Designed for high-traffic or seasonal businesses needing frequent updates and 2–4 hour response time. |
-| ⚡ **Now** | $500 | Premium tier with real-time monitoring, live deployment updates, and near-instant support. |
+| **Business** | $150 | Standard plan for small businesses that need reliable chatbot automation with monthly updates and maintenance. |
+| **Elite** | $250 | Includes faster content updates, priority support, and weekly optimization refreshes. |
+| **MVP** | $350 | Designed for high-traffic or seasonal businesses needing frequent updates and 2–4 hour response time. |
+| **Now** | $500 | Premium tier with real-time monitoring, live deployment updates, and near-instant support. |
 
 Each package also requires a **one-time setup fee of $399**, which covers onboarding, chatbot customization, and initial content training.
 
