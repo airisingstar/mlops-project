@@ -23,29 +23,6 @@ It includes automated **data cleaning**, **training**, **model promotion**, **de
 
 ---
 
-# 🧠 MLOps Project
-
-End-to-end example of a **production-grade MLOps pipeline** — from raw data ingestion to model serving and continuous monitoring.
-
----
-
-## 🚀 Overview
-
-This project demonstrates a full MLOps workflow implemented in **Python**.  
-It includes automated **data cleaning**, **training**, **model promotion**, **deployment**, and **monitoring** stages.
-
-| Stage | Folder | Owner Script | Description |
-|--------|---------|--------------|--------------|
-| 🧩 Raw Data | `data/raw` | — | Manual or ETL uploads raw data |
-| 🧹 Data Prep | `data/interim`, `data/processed` | `src/data_prep.py` | Cleans + joins data for training |
-| 🧮 Feature Engineering | `data/features` | `src/feature_engineering.py` | Creates derived fields for ML |
-| 🤖 Model Training | `models/` | `src/train.py` | Builds and evaluates model |
-| 📦 Model Registry | `model_registry/` | `src/register_model.py` | Stores promoted models |
-| 🌐 Inference | — | `src/serve_app.py` | Exposes REST API for predictions |
-| 📊 Monitoring | `data/monitoring/` | `src/drift_check.py` | Detects drift and triggers retraining |
-
----
-
 ## 🧠 How the Pipeline Works
 
 This pipeline follows an **event-driven orchestration model**, where each stage is triggered automatically when the previous one completes successfully or when new data arrives.  
