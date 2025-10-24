@@ -111,7 +111,7 @@ The goal is a **self-updating lifecycle** that moves from data ingestion to live
           └───────────────────────────┘
 ```
 
-🧭 Automation
+### 🧭 Automation
 Local / Sandbox Mode: Sequential execution via make run-all or bash pipeline.sh.
 
 Cloud Mode: Orchestration handled by AWS Step Functions, Airflow, or Prefect.
@@ -120,7 +120,7 @@ Event Communication: S3/Lambda → SNS → Step Functions → ECS/Fargate → Mo
 
 Self-Healing Cycle: The monitoring agent detects drift and retriggers training automatically.
 
-🧩 Tech Stack
+### 🧩 Tech Stack
 Layer	Tools
 Language	Python 3.10+
 Libraries	pandas, scikit-learn, joblib, FastAPI, uvicorn
@@ -129,7 +129,7 @@ Version Control	Git + GitHub
 Model Registry	MLflow
 CI/CD Integration	Azure DevOps or GitHub Actions ready
 
-⚙️ Running the Pipeline
+### ⚙️ Running the Pipeline
 1️⃣ Prepare environment
 
 bash
@@ -160,6 +160,7 @@ uvicorn src.serve_app:app --host 0.0.0.0 --port 8080
 bash
 Copy code
 python src/drift_check.py
-✅ Author & Versioning
+
+### ✅ Author & Versioning
 Author: David Santana Rivera
-Created: 2025-10-21
+Created: 10-10-2025
