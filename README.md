@@ -121,13 +121,15 @@ Event Communication: S3/Lambda → SNS → Step Functions → ECS/Fargate → Mo
 Self-Healing Cycle: The monitoring agent detects drift and retriggers training automatically.
 
 ### 🧩 Tech Stack
-Layer	Tools
-Language	Python 3.10+
-Libraries	pandas, scikit-learn, joblib, FastAPI, uvicorn
-Storage	Local /data/ (simulates S3 / Blob)
-Version Control	Git + GitHub
-Model Registry	MLflow
-CI/CD Integration	Azure DevOps or GitHub Actions ready
+
+Layer  Tools  
+Language  Python 3.10+  
+Libraries  pandas, scikit-learn, joblib, FastAPI, uvicorn  
+Storage  Local /data/ (simulates S3 / Blob)  
+Version Control  Git + GitHub  
+Model Registry  MLflow  
+CI/CD Integration  Azure DevOps or GitHub Actions ready
+
 
 ### ⚙️ Running the Pipeline
 1️⃣ Prepare environment
