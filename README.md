@@ -111,6 +111,3 @@ The goal is a **self-updating lifecycle** that moves from data ingestion to live
           └───────────────────────────┘
 
 
-Version: v1.0 – Full baseline MLOps repo structure
-
-License: MIT (customize as needed)
