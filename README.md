@@ -132,6 +132,8 @@ The goal is a **self-updating lifecycle** that moves from data ingestion to live
           │ 📈 Monitoring & Drift      │
           │ Auto-retrain trigger loop │
           └───────────────────────────┘
+```
+
 🧭 Automation
 Local / Sandbox Mode: Sequential execution via make run-all or bash pipeline.sh.
 
