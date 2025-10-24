@@ -133,10 +133,11 @@ Self-Healing Cycle: The monitoring agent detects drift and retriggers training a
 
 
 ### ⚙️ Running the Pipeline
-1️⃣ Prepare environment
 
-bash
-Copy code
+### ⚙️ Running the Pipeline
+
+1️⃣ **Prepare environment**
+```bash
 pip install -r requirements.txt
 2️⃣ Run data preparation
 
