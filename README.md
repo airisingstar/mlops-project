@@ -124,12 +124,12 @@ Self-Healing Cycle: The monitoring agent detects drift and retriggers training a
 
 | Layer | Tools |
 |--------|--------|
-| 💻 **Language** | Python 3.10+ |
-| 📚 **Libraries** | pandas, scikit-learn, joblib, FastAPI, uvicorn |
-| 💾 **Storage** | Local `/data/` (simulates S3 / Blob) |
-| 🔧 **Version Control** | Git + GitHub |
-| 🏷️ **Model Registry** | MLflow |
-| 🚀 **CI/CD Integration** | Azure DevOps or GitHub Actions ready |
+| **Language** | Python 3.10+ |
+| **Libraries** | pandas, scikit-learn, joblib, FastAPI, uvicorn |
+| **Storage** | Local `/data/` (simulates S3 / Blob) |
+| **Version Control** | Git + GitHub |
+| **Model Registry** | MLflow |
+| **CI/CD Integration** | Azure DevOps or GitHub Actions ready |
 
 
 ### ⚙️ Running the Pipeline
