@@ -8,7 +8,7 @@ End-to-end example of a **production-grade MLOps pipeline** — from raw data in
 
 ## 🎯 Model Goal
 
-The objective of this project is to **predict which customer groups are most likely to make a large future purchase** based on their demographics, transaction behavior, and loyalty attributes.
+The objective of this sample project is to **predict which customer groups are most likely to make a large future purchase** based on their demographics, transaction behavior, and loyalty attributes.
 
 This model uses two primary data sources:
 
