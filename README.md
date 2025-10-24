@@ -4,35 +4,6 @@
 
 End-to-end example of a production-grade MLOps pipeline — from raw data ingestion to model serving and monitoring.
 
-mlops-project/
-├─ data/ # datasets (raw → processed → monitoring)
-│ ├─ raw/ # untouched incoming data
-│ ├─ interim/ # cleaned but not final
-│ ├─ processed/ # ready for model training
-│ ├─ features/ # engineered reusable features
-│ ├─ validation/ # QA, schema, and golden datasets
-│ ├─ predictions/ # model outputs for QA/audit
-│ └─ monitoring/ # drift metrics and performance snapshots
-│
-├─ src/ # core pipeline code
-│ ├─ data_prep.py # raw → interim + processed
-│ ├─ train.py # train + evaluate model
-│ ├─ register_model.py # model registry promotion
-│ ├─ feature_engineering.py # optional feature creation
-│ ├─ serve_app.py # FastAPI inference service
-│ ├─ drift_check.py # drift detection & retraining triggers
-│ └─ common.py # shared utilities and schema checks
-│
-├─ models/ # trained model artifacts (.pkl, .onnx, etc.)
-├─ model_registry/ # promoted/production models
-├─ requirements.txt # Python dependencies
-└─ README.md # project overview (this file)
-
-markdown
-Copy code
-
----
-
 ## 🚀 **Overview**
 
 This project demonstrates a full MLOps workflow implemented in Python.  
@@ -40,7 +11,7 @@ It includes automated data cleaning, training, model promotion, deployment, and 
 
 | Stage | Folder | Owner Script | Description |
 |--------|---------|--------------|--------------|
-| 🧩 Raw Data | `data/raw` | — | Human or ETL uploads messy data |
+| 🧩 Raw Data | `data/raw` | — | Manual or ETL uploads raw data |
 | 🧹 Data Prep | `data/interim`, `data/processed` | `src/data_prep.py` | Cleans + joins data for training |
 | 🧮 Feature Engineering | `data/features` | `src/feature_engineering.py` | Creates derived fields for ML |
 | 🤖 Model Training | `models/` | `src/train.py` | Builds and evaluates model |
@@ -108,9 +79,9 @@ Copy code
 |--------|--------|
 | **Language** | Python 3.10+ |
 | **Libraries** | pandas, scikit-learn, joblib, FastAPI, uvicorn |
-| **Storage** | Local `/data/` folders (simulates S3 / Blob) |
+| **Storage** | Local `/data/` (simulates S3 / Blob) |
 | **Versioning** | Git + GitHub |
-| **Model Registry** | Local folder or MLflow (optional) |
+| **Model Registry** | MLflow |
 | **CI/CD Integration** | Azure DevOps or GitHub Actions ready |
 
 ---
