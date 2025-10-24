@@ -30,9 +30,6 @@ It includes automated data cleaning, training, model promotion, deployment, and 
 data/interim/cleaned_customers.csv
 data/interim/filtered_sales.csv
 
-markdown
-Copy code
-
 ### 2️⃣ **Interim → Processed**
 - Splits cleaned dataset into `train.csv` and `validation.csv`
 - Output path: `data/processed/`
@@ -41,23 +38,14 @@ Copy code
 - Optional advanced step for derived metrics:
 data/features/customer_features_v3.csv
 
-markdown
-Copy code
-
 ### 4️⃣ **Training**
 - Trains ML model (`RandomForestClassifier` placeholder)
 - Saves artifact to:
 models/model_v1.pkl
 
-markdown
-Copy code
-
 ### 5️⃣ **Model Registry Promotion**
 - Promotes best model to:
 model_registry/model_production.pkl
-
-markdown
-Copy code
 
 ### 6️⃣ **Serving**
 - FastAPI app (`src/serve_app.py`)
@@ -67,9 +55,6 @@ Copy code
 - Drift metrics saved automatically:
 data/monitoring/input_stats_<date>.json
 data/monitoring/drift_summary.csv
-
-yaml
-Copy code
 
 ---
 
