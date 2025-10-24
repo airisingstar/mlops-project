@@ -139,31 +139,32 @@ Self-Healing Cycle: The monitoring agent detects drift and retriggers training a
 1️⃣ **Prepare environment**
 ```bash
 pip install -r requirements.txt
+```
+
 2️⃣ Run data preparation
-
-bash
-Copy code
+```bash
 python src/data_prep.py
+```
+
 3️⃣ Train the model
-
-bash
-Copy code
+```bash
 python src/train.py
+```
+
 4️⃣ Register model
-
-bash
-Copy code
+```bash
 python src/register_model.py
+```
+
 5️⃣ Serve the model (API)
-
-bash
-Copy code
+```bash
 uvicorn src.serve_app:app --host 0.0.0.0 --port 8080
-6️⃣ Monitor drift
+```
 
-bash
-Copy code
+6️⃣ Monitor drift
+```bash
 python src/drift_check.py
+```
 
 ### ✅ Author & Versioning
 Author: David Santana Rivera
