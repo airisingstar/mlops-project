@@ -23,6 +23,29 @@ It includes automated **data cleaning**, **training**, **model promotion**, **de
 
 ---
 
+# 🧠 MLOps Project
+
+End-to-end example of a **production-grade MLOps pipeline** — from raw data ingestion to model serving and continuous monitoring.
+
+---
+
+## 🚀 Overview
+
+This project demonstrates a full MLOps workflow implemented in **Python**.  
+It includes automated **data cleaning**, **training**, **model promotion**, **deployment**, and **monitoring** stages.
+
+| Stage | Folder | Owner Script | Description |
+|--------|---------|--------------|--------------|
+| 🧩 Raw Data | `data/raw` | — | Manual or ETL uploads raw data |
+| 🧹 Data Prep | `data/interim`, `data/processed` | `src/data_prep.py` | Cleans + joins data for training |
+| 🧮 Feature Engineering | `data/features` | `src/feature_engineering.py` | Creates derived fields for ML |
+| 🤖 Model Training | `models/` | `src/train.py` | Builds and evaluates model |
+| 📦 Model Registry | `model_registry/` | `src/register_model.py` | Stores promoted models |
+| 🌐 Inference | — | `src/serve_app.py` | Exposes REST API for predictions |
+| 📊 Monitoring | `data/monitoring/` | `src/drift_check.py` | Detects drift and triggers retraining |
+
+---
+
 ## 🧠 How the Pipeline Works
 
 This pipeline follows an **event-driven orchestration model**, where each stage is triggered automatically when the previous one completes successfully or when new data arrives.  
@@ -109,13 +132,7 @@ The goal is a **self-updating lifecycle** that moves from data ingestion to live
           │ 📈 Monitoring & Drift      │
           │ Auto-retrain trigger loop │
           └───────────────────────────┘
-
-```text
-
----
-
-### 🧭 Automation
-
+🧭 Automation
 Local / Sandbox Mode: Sequential execution via make run-all or bash pipeline.sh.
 
 Cloud Mode: Orchestration handled by AWS Step Functions, Airflow, or Prefect.
@@ -132,38 +149,38 @@ Storage	Local /data/ (simulates S3 / Blob)
 Version Control	Git + GitHub
 Model Registry	MLflow
 CI/CD Integration	Azure DevOps or GitHub Actions ready
-⚙️ Running the Pipeline
 
+⚙️ Running the Pipeline
 1️⃣ Prepare environment
 
+bash
+Copy code
 pip install -r requirements.txt
-
-
 2️⃣ Run data preparation
 
+bash
+Copy code
 python src/data_prep.py
-
-
 3️⃣ Train the model
 
+bash
+Copy code
 python src/train.py
-
-
 4️⃣ Register model
 
+bash
+Copy code
 python src/register_model.py
-
-
 5️⃣ Serve the model (API)
 
+bash
+Copy code
 uvicorn src.serve_app:app --host 0.0.0.0 --port 8080
-
-
 6️⃣ Monitor drift
 
+bash
+Copy code
 python src/drift_check.py
-
 ✅ Author & Versioning
-
 Author: David Santana Rivera
 Created: 2025-10-21
