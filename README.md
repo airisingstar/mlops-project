@@ -21,40 +21,100 @@ It includes automated data cleaning, training, model promotion, deployment, and 
 
 ---
 
-## 🧠 **How the Pipeline Works**
+## 🧠 How the Pipeline Works
 
-### 1️⃣ **Raw → Interim**
-- Input: `data/raw/customers.csv`, `data/raw/transactions.json`  
-- Script: `src/data_prep.py`
-- Cleans missing values, merges tables, and saves:
-data/interim/cleaned_customers.csv
-data/interim/filtered_sales.csv
+This pipeline follows an **event-driven orchestration model**, where each stage is triggered automatically when the previous one completes successfully or when new data arrives.  
+The goal is a **self-updating lifecycle** that moves from data ingestion to live monitoring with minimal manual effort.
 
-### 2️⃣ **Interim → Processed**
-- Splits cleaned dataset into `train.csv` and `validation.csv`
-- Output path: `data/processed/`
+---
 
-### 3️⃣ **Feature Engineering**
-- Optional advanced step for derived metrics:
-data/features/customer_features_v3.csv
+### ⚡ Event Flow Overview
 
-### 4️⃣ **Training**
-- Trains ML model (`RandomForestClassifier` placeholder)
-- Saves artifact to:
-models/model_v1.pkl
+1️⃣ **Data Ingestion (Trigger Source)**  
+- New raw data lands in **S3** (or `data/raw/` locally).  
+- An **S3 event notification** or filesystem watcher detects the upload.  
+- This event **triggers the Data Preparation job** to start cleaning and validation.
 
-### 5️⃣ **Model Registry Promotion**
-- Promotes best model to:
-model_registry/model_production.pkl
+2️⃣ **Data Preparation → Processed Output**  
+- `src/data_prep.py` cleans, merges, and validates schema.  
+- Once complete, it emits a `_SUCCESS` marker or orchestration event (e.g., Step Functions, Airflow, or Prefect).  
+- That event **triggers the Feature Engineering job**.
 
-### 6️⃣ **Serving**
-- FastAPI app (`src/serve_app.py`)
-- Exposes `/predict` endpoint for real-time inference
+3️⃣ **Feature Engineering Trigger**  
+- `src/feature_engineering.py` generates new derived metrics and aggregates.  
+- When output is written (`data/features/*.parquet`), the orchestrator **launches the Model Training stage**.
 
-### 7️⃣ **Monitoring**
-- Drift metrics saved automatically:
-data/monitoring/input_stats_<date>.json
-data/monitoring/drift_summary.csv
+4️⃣ **Model Training & Validation**  
+- `src/train.py` trains and evaluates ML models.  
+- Performance metrics are logged and compared with prior runs.  
+- Upon success, the job emits a **promotion-ready event**.
+
+5️⃣ **Model Registry & Promotion**  
+- `src/register_model.py` promotes the new model to production if metrics improve.  
+- Promotion automatically **triggers deployment**.
+
+6️⃣ **Model Deployment & Serving**  
+- `src/deploy_model.py` rebuilds and redeploys the FastAPI microservice.  
+- The `/predict` endpoint begins serving the new model version immediately.
+
+7️⃣ **Monitoring & Auto-Retrain Loop**  
+- `src/monitor_drift.py` runs on a schedule (cron, Airflow DAG, or Lambda).  
+- It monitors **data drift** and **concept drift**.  
+- If drift > threshold, it **re-triggers the data prep and training pipeline**, closing the automation loop.
+
+---
+
+### 🔄 Event-Driven Pipeline Graph
+
+```text
+          ┌───────────────────────────┐
+          │     🗂️  S3 / Raw Data     │
+          │   (new upload detected)   │
+          └──────────────┬────────────┘
+                         │
+                         ▼
+          ┌───────────────────────────┐
+          │ ⚙️  Data Preparation Job  │
+          │ Cleans, merges, validates │
+          └──────────────┬────────────┘
+                         │
+                         ▼
+          ┌───────────────────────────┐
+          │ 🧮 Feature Engineering     │
+          │ Derived metrics, encoding │
+          └──────────────┬────────────┘
+                         │
+                         ▼
+          ┌───────────────────────────┐
+          │ 🤖 Model Training          │
+          │ Train, evaluate, validate │
+          └──────────────┬────────────┘
+                         │
+                         ▼
+          ┌───────────────────────────┐
+          │ 🏷️  Model Registry         │
+          │ Versioning & promotion    │
+          └──────────────┬────────────┘
+                         │
+                         ▼
+          ┌───────────────────────────┐
+          │ 🚀 Deployment (FastAPI)   │
+          │ Exposes /predict endpoint │
+          └──────────────┬────────────┘
+                         │
+                         ▼
+          ┌───────────────────────────┐
+          │ 📈 Monitoring & Drift      │
+          │ Auto-retrain trigger loop │
+          └───────────────────────────┘
+🧭 Automation Backbone
+Local / Sandbox Mode: Sequential execution via make run-all or bash pipeline.sh.
+
+Cloud Mode: Orchestration handled by AWS Step Functions, Airflow, or Prefect.
+
+Event Communication: S3/Lambda → SNS → Step Functions → ECS/Fargate tasks → Model Registry → FastAPI deployment.
+
+Self-Healing Cycle: The monitoring agent detects drift and retriggers training automatically.
 
 ---
 
